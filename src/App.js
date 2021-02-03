@@ -2,15 +2,14 @@ import React from 'react';
 import logo from './Images/bomb.svg';
 import fired from './Images/fired.svg';
 import target from './Images/target.svg';
-import ReactDOM from 'react-dom';
 import './App.css';
 
 function CompFired() {
-  return <img className='cell-img' src={fired} />
+  return <img className='cell-img' src={fired} alt="" />
 }
 
 function CompTarget() {
-  return <img className='cell-img' src={target} />
+  return <img className='cell-img' src={target} alt="" />
 }
 
 function randomInt(min, max) { // min and max included 
@@ -23,7 +22,6 @@ for (let i = 1; i <= 10; i++) {
 } 
 
 let zeroList = [];
-var idCounter = 1;
 
 class Cell extends React.Component {
   constructor(props) {
@@ -39,7 +37,6 @@ class Cell extends React.Component {
 
   componentDidMount() {
     this.updateId();
-    idCounter++;
     this.bombSetup();
     this.interval = setInterval(() => this.revealTiles(), 100);
   }
@@ -53,10 +50,6 @@ class Cell extends React.Component {
         bombCounter: this.state.bombCounter
       })
   };
-
-  componentDidUpdate() {
-    
-  }
 
   componentWillUnmount() {
     document.removeEventListener("contextmenu", this.handleRightClick);
@@ -76,19 +69,19 @@ class Cell extends React.Component {
 
   handleRightClick = (e) => {
     e.preventDefault();
-    if (this.state.val == 'closed') {
+    if (this.state.val === 'closed') {
       this.setState(state => ({isFlagged: true}));
     }
   }
 
   addZero() {
-    if (this.state.bombCounter == 0) {
+    if (this.state.bombCounter === 0) {
       zeroList.push(this.props.id);
     }
   } 
 
   revealTiles() {
-    if (this.state.val == 'closed') {
+    if (this.state.val === 'closed') {
       for (const x of zeroList) {
         if ((this.props.id - 1) === x) {
           this.setState(state => ({val: 'open'}));
@@ -136,7 +129,7 @@ class Cell extends React.Component {
 
   bombSetup() {
     for (const x of bombList) {
-      if (x == this.props.id) {
+      if (x === this.props.id) {
         this.setState(state => ({bombCounter: 99}));
         this.setState(state => ({isBomb: true}));
         return;
@@ -218,7 +211,7 @@ class App extends React.Component {
         <div className="App-container">
           <div className="App-Header">
             <p className="App-title">Minesweeper</p>
-            <img src={logo} className="App-logo"></img>
+            <img src={logo} className="App-logo" alt="logo"></img>
           </div>
           <div className="Control">
             <div className="flagCounter">
