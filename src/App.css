@@ -1,10 +1,46 @@
 .App {
-  text-align: center;
+  background-color: #282c34;
+  height: 100vh;
+  width: 100vw;
+  display: flex;
+  justify-content: center;
+}
+
+
+.App-container {
+  display: flex;
+  font-size: calc(10px + 2vmin);
+  flex-direction: column;
+  align-self: center;
+  color: white;
+  width: 400px;
+  justify-content: center;
+  background-color: #282c34;
+  border: 1px solid red;
+  border-radius: 5px;
+  padding-top: 10px;
+  box-shadow: 5px 5px 15px red, -5px -5px 15px red, 5px -5px 15px red, -5px 5px 15px red
 }
 
 .App-logo {
-  height: 40vmin;
+  height: 35px;
   pointer-events: none;
+  margin-left: 10px;
+  align-self: center;
+}
+.App-title {
+  font-size: 40px;
+}
+
+.App-Header {
+  display: flex;
+  flex-direction: row;
+  justify-content: center;
+  width: 400px;
+  height: 65px;
+  padding-right: 5px;
+  align-self: center;
+  align-items: center;
 }
 
 @media (prefers-reduced-motion: no-preference) {
@@ -12,18 +48,74 @@
     animation: App-logo-spin infinite 20s linear;
   }
 }
-
-.App-header {
-  background-color: #282c34;
-  min-height: 100vh;
+.Control {
   display: flex;
-  flex-direction: column;
-  align-items: center;
+  height: 65px;
+  width: 400px;
+  flex-direction: row;
   justify-content: center;
-  font-size: calc(10px + 2vmin);
-  color: white;
+  align-items: center;
+  align-self: center;
 }
 
+.flagCounter {
+  margin: 10px;
+  padding: 1px 15px;
+  display: inline-block;
+}
+
+.timer {
+  margin: 10px;
+  padding: 1px 7px;
+  display: inline-block;
+}
+
+.reset {
+  margin: 10px;
+  padding: 15px 7px;
+  display: inline-block;
+}
+
+.Field {
+  display: grid;
+  grid-template-columns: 40px 40px 40px 40px 40px 40px 40px 40px;
+  margin-bottom: 10px;
+  width: 320px;
+  align-self: center;
+  
+}
+
+.cell-closed {
+  margin: 5px;
+  width: 30px;
+  height: 30px;
+  background-color: black;
+  font-size: 15px;
+  
+}
+.cell-bomb {
+  margin: 5px;
+  width: 30px;
+  height: 30px;
+  background-color: red;
+  box-shadow: 1px 1px 5px red, -1px -1px 5px red, 1px -1px 5px red, -1px 1px 5px red
+}
+.cell-img {
+  width: 25px;
+  height: 25px;
+  margin-left: 2.5px;
+  margin-top: 2.5px;
+  
+}
+
+.cell-open {
+  margin: 5px;
+  width: 30px;
+  height: 30px;
+  background-color: gray;
+  font-size: 15px;
+  box-shadow: 1px 1px 5px red, -1px -1px 5px red, 1px -1px 5px red, -1px 1px 5px red
+}
 .App-link {
   color: #61dafb;
 }
