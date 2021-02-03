@@ -1,7 +1,7 @@
 import React from 'react';
-import logo from './images/bomb.svg';
-import fired from './images/fired.svg';
-import target from './images/target.svg';
+import logo from './Images/bomb.svg';
+import fired from './Images/fired.svg';
+import target from './Images/target.svg';
 import ReactDOM from 'react-dom';
 import './App.css';
 
