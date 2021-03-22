@@ -18,7 +18,13 @@ function randomInt(min, max) { // min and max included
 
 let bombList = [];
 for (let i = 1; i <= 10; i++) {
-  bombList.push(randomInt(1, 72));
+  var randCol = randomInt(1, 8);
+  var randRow = randomInt(1, 9);
+  if (bombList.includes([randRow, randCol])) {
+
+  } else {
+    bombList.push([randRow, randCol]);
+  }
 } 
 
 let zeroList = [];
@@ -30,13 +36,13 @@ class Cell extends React.Component {
       val: 'closed', 
       isBomb: false, 
       isFlagged: false, 
-      id: 0, 
+      col: 0, 
+      row: 0,
       bombCounter: 0}
     this.handleClick = this.handleClick.bind(this);
   }
 
   componentDidMount() {
-    this.updateId();
     this.bombSetup();
     this.interval = setInterval(() => this.revealTiles(), 100);
   }
@@ -56,10 +62,6 @@ class Cell extends React.Component {
     clearInterval(this.interval);
   }
 
-  uuf = () => {
-    this.props.uuf()
-  }
-
   handleClick() {
     this.setState(state => ({val: 'open'}));
     this.addZero();
@@ -76,51 +78,52 @@ class Cell extends React.Component {
 
   addZero() {
     if (this.state.bombCounter === 0) {
-      zeroList.push(this.props.id);
+      zeroList.push([this.props.row, this.props.col]);
     }
   } 
 
   revealTiles() {
     if (this.state.val === 'closed') {
       for (const x of zeroList) {
-        if ((this.props.id - 1) === x) {
+        if (x[0] == this.props.row && (x[1] - 1) == this.props.col) {
           this.setState(state => ({val: 'open'}));
           this.addZero();
         };
-        if ((this.props.id + 1) === x) {
+        if (x[0] == this.props.row && (x[1] + 1) == this.props.col) {
           this.setState(state => ({val: 'open'}));
           this.addZero();
         };
-        if ((this.props.id - 8) === x) {
+        if ((x[0]-1) == this.props.row && x[1] == this.props.col) {
           this.setState(state => ({val: 'open'}));
           this.addZero();
         };
-        if ((this.props.id + 8) === x) {
+        if ((x[0]+1) == this.props.row && x[1] == this.props.col) {
           this.setState(state => ({val: 'open'}));
           this.addZero();
         };
-        if ((this.props.id - 9) === x) {
+        if ((x[0]-1) == this.props.row && (x[1]-1) == this.props.col) {
           this.setState(state => ({val: 'open'}));
           this.addZero();
         };
-        if ((this.props.id + 9) === x) {
+        if ((x[0]-1) == this.props.row && (x[1]+1) == this.props.col) {
           this.setState(state => ({val: 'open'}));
           this.addZero();
         };
-        if ((this.props.id - 7) === x) {
+        if ((x[0]+1) == this.props.row && (x[1]-1) == this.props.col) {
           this.setState(state => ({val: 'open'}));
           this.addZero();
         };
-        if ((this.props.id + 7) === x) {
+        if ((x[0]+1) == this.props.row && (x[1]+1) == this.props.col) {
           this.setState(state => ({val: 'open'}));
           this.addZero();
         };
-      }
+      };
     }
   }
 
   updateId() {
-    this.setState(state => ({id: this.props.id}));
+    this.setState(state => ({row: this.props.row}));
+    this.setState(state => ({col: this.props.col}));
   }
 
   bombAdd() {
@@ -129,7 +132,7 @@ class Cell extends React.Component {
 
   bombSetup() {
     for (const x of bombList) {
-      if (x === this.props.id) {
+      if (x[0] == this.props.row && x[1] == this.props.col) {
         this.setState(state => ({bombCounter: 99}));
         this.setState(state => ({isBomb: true}));
         return;
@@ -137,28 +140,28 @@ class Cell extends React.Component {
     };
     
     for (const x of bombList) {
-      if ((this.props.id - 1) === x) {
+      if (x[0] == this.props.row && (x[1] - 1) == this.props.col) {
         this.bombAdd();
       };
-      if ((this.props.id + 1) === x) {
+      if (x[0] == this.props.row && (x[1] + 1) == this.props.col) {
         this.bombAdd();
       };
-      if ((this.props.id - 8) === x) {
+      if ((x[0]-1) == this.props.row && x[1] == this.props.col) {
         this.bombAdd();
       };
-      if ((this.props.id + 8) === x) {
+      if ((x[0]+1) == this.props.row && x[1] == this.props.col) {
         this.bombAdd();
       };
-      if ((this.props.id - 9) === x) {
+      if ((x[0]-1) == this.props.row && (x[1]-1) == this.props.col) {
         this.bombAdd();
       };
-      if ((this.props.id + 9) === x) {
+      if ((x[0]-1) == this.props.row && (x[1]+1) == this.props.col) {
         this.bombAdd();
       };
-      if ((this.props.id - 7) === x) {
+      if ((x[0]+1) == this.props.row && (x[1]-1) == this.props.col) {
         this.bombAdd();
       };
-      if ((this.props.id + 7) === x) {
+      if ((x[0]+1) == this.props.row && (x[1]+1) == this.props.col) {
         this.bombAdd();
       };
     };
@@ -172,7 +175,7 @@ class Cell extends React.Component {
         img = <CompTarget />
         clsName = 'cell-closed';
       } else {
-        img = <p>{this.props.id}</p>;
+        img = <p>{this.props.row + this.props.col}</p>;
         clsName = 'cell-closed';
       }
     } else if (this.state.val === 'open') {
@@ -201,9 +204,23 @@ class App extends React.Component {
     this.state = {uselessUpdate: 0};
   }
 
+  nestedArray = [
+    [<Cell row={1} col={1} />, <Cell row={1} col={2} />, <Cell row={1} col={3} />, <Cell row={1} col={4} />, <Cell row={1} col={5} />, <Cell row={1} col={6} />, <Cell row={1} col={7} />, <Cell row={1} col={8} />],
+    [<Cell row={2} col={1} />, <Cell row={2} col={2} />, <Cell row={2} col={3} />, <Cell row={2} col={4} />, <Cell row={2} col={5} />, <Cell row={2} col={6} />, <Cell row={2} col={7} />, <Cell row={2} col={8} />],
+    [<Cell row={3} col={1} />, <Cell row={3} col={2} />, <Cell row={3} col={3} />, <Cell row={3} col={4} />, <Cell row={3} col={5} />, <Cell row={3} col={6} />, <Cell row={3} col={7} />, <Cell row={3} col={8} />],
+    [<Cell row={4} col={1} />, <Cell row={4} col={2} />, <Cell row={4} col={3} />, <Cell row={4} col={4} />, <Cell row={4} col={5} />, <Cell row={4} col={6} />, <Cell row={4} col={7} />, <Cell row={4} col={8} />],
+    [<Cell row={5} col={1} />, <Cell row={5} col={2} />, <Cell row={5} col={3} />, <Cell row={5} col={4} />, <Cell row={5} col={5} />, <Cell row={5} col={6} />, <Cell row={5} col={7} />, <Cell row={5} col={8} />],
+    [<Cell row={6} col={1} />, <Cell row={6} col={2} />, <Cell row={6} col={3} />, <Cell row={6} col={4} />, <Cell row={6} col={5} />, <Cell row={6} col={6} />, <Cell row={6} col={7} />, <Cell row={6} col={8} />],
+    [<Cell row={7} col={1} />, <Cell row={7} col={2} />, <Cell row={7} col={3} />, <Cell row={7} col={4} />, <Cell row={7} col={5} />, <Cell row={7} col={6} />, <Cell row={7} col={7} />, <Cell row={7} col={8} />],
+    [<Cell row={8} col={1} />, <Cell row={8} col={2} />, <Cell row={8} col={3} />, <Cell row={8} col={4} />, <Cell row={8} col={5} />, <Cell row={8} col={6} />, <Cell row={8} col={7} />, <Cell row={8} col={8} />],
+    [<Cell row={9} col={1} />, <Cell row={9} col={2} />, <Cell row={9} col={3} />, <Cell row={9} col={4} />, <Cell row={9} col={5} />, <Cell row={9} col={6} />, <Cell row={9} col={7} />, <Cell row={9} col={8} />]
+  ]
+
   uselessUpdateFunction() {
     this.setState(prevState => ({uselessUpdate: prevState.uselessUpdate + 1}));
   }
+
+  
 
   render() {
     return (
@@ -225,78 +242,7 @@ class App extends React.Component {
             </div>
           </div>
           <div className="Field">
-            <Cell id={1} />
-            <Cell id={2} />
-            <Cell id={3} />
-            <Cell id={4} />
-            <Cell id={5} />
-            <Cell id={6} />
-            <Cell id={7} />
-            <Cell id={8} />
-            <Cell id={9} />
-            <Cell id={10} />
-            <Cell id={11} />
-            <Cell id={12} />
-            <Cell id={13} />
-            <Cell id={14} />
-            <Cell id={15} />
-            <Cell id={16} />
-            <Cell id={17} />
-            <Cell id={18} />
-            <Cell id={19} />
-            <Cell id={20} />
-            <Cell id={21} />
-            <Cell id={22} />
-            <Cell id={23} />
-            <Cell id={24} />
-            <Cell id={25} />
-            <Cell id={26} />
-            <Cell id={27} />
-            <Cell id={28} />
-            <Cell id={29} />
-            <Cell id={30} />
-            <Cell id={31} />
-            <Cell id={32} />
-            <Cell id={33} />
-            <Cell id={34} />
-            <Cell id={35} />
-            <Cell id={36} />
-            <Cell id={37} />
-            <Cell id={38} />
-            <Cell id={39} />
-            <Cell id={40} />
-            <Cell id={41} />
-            <Cell id={42} />
-            <Cell id={43} />
-            <Cell id={44} />
-            <Cell id={45} />
-            <Cell id={46} />
-            <Cell id={47} />
-            <Cell id={48} />
-            <Cell id={49} />
-            <Cell id={50} />
-            <Cell id={51} />
-            <Cell id={52} />
-            <Cell id={53} />
-            <Cell id={54} />
-            <Cell id={55} />
-            <Cell id={56} />
-            <Cell id={57} />
-            <Cell id={58} />
-            <Cell id={59} />
-            <Cell id={60} />
-            <Cell id={61} />
-            <Cell id={62} />
-            <Cell id={63} />
-            <Cell id={64} />
-            <Cell id={65} />
-            <Cell id={66} />
-            <Cell id={67} />
-            <Cell id={68} />
-            <Cell id={69} />
-            <Cell id={70} />
-            <Cell id={71} />
-            <Cell id={72} />
+            {this.nestedArray}
           </div>
         </div>
       </div>
