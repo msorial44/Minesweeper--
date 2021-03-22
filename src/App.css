@@ -89,8 +89,9 @@
   margin: 5px;
   width: 30px;
   height: 30px;
-  background-color: black;
+  background-color: rgb(32, 32, 32);
   font-size: 15px;
+  box-shadow: 1px 1px 2px black, -1px -1px 2px black, 1px -1px 2px black, -1px 1px 2px black
   
 }
 .cell-bomb {
@@ -113,7 +114,12 @@
   width: 30px;
   height: 30px;
   background-color: gray;
-  font-size: 15px;
+  font-size: 20px;
+  text-align: center;
+  vertical-align: middle;
+  display: flex;
+  justify-content: center;
+  align-items: center;
   box-shadow: 1px 1px 5px red, -1px -1px 5px red, 1px -1px 5px red, -1px 1px 5px red
 }
 .App-link {

@@ -72,7 +72,11 @@ class Cell extends React.Component {
   handleRightClick = (e) => {
     e.preventDefault();
     if (this.state.val === 'closed') {
-      this.setState(state => ({isFlagged: true}));
+      if (this.state.isFlagged){
+        this.setState(state => ({isFlagged: false}));
+      }else{
+        this.setState(state => ({isFlagged: true}));
+      }
     }
   }
 
@@ -85,35 +89,35 @@ class Cell extends React.Component {
   revealTiles() {
     if (this.state.val === 'closed') {
       for (const x of zeroList) {
-        if (x[0] == this.props.row && (x[1] - 1) == this.props.col) {
+        if (x[0] === this.props.row && (x[1] - 1) === this.props.col) {
           this.setState(state => ({val: 'open'}));
           this.addZero();
         };
-        if (x[0] == this.props.row && (x[1] + 1) == this.props.col) {
+        if (x[0] === this.props.row && (x[1] + 1) === this.props.col) {
           this.setState(state => ({val: 'open'}));
           this.addZero();
         };
-        if ((x[0]-1) == this.props.row && x[1] == this.props.col) {
+        if ((x[0]-1) === this.props.row && x[1] === this.props.col) {
           this.setState(state => ({val: 'open'}));
           this.addZero();
         };
-        if ((x[0]+1) == this.props.row && x[1] == this.props.col) {
+        if ((x[0]+1) === this.props.row && x[1] === this.props.col) {
           this.setState(state => ({val: 'open'}));
           this.addZero();
         };
-        if ((x[0]-1) == this.props.row && (x[1]-1) == this.props.col) {
+        if ((x[0]-1) === this.props.row && (x[1]-1) === this.props.col) {
           this.setState(state => ({val: 'open'}));
           this.addZero();
         };
-        if ((x[0]-1) == this.props.row && (x[1]+1) == this.props.col) {
+        if ((x[0]-1) === this.props.row && (x[1]+1) === this.props.col) {
           this.setState(state => ({val: 'open'}));
           this.addZero();
         };
-        if ((x[0]+1) == this.props.row && (x[1]-1) == this.props.col) {
+        if ((x[0]+1) === this.props.row && (x[1]-1) === this.props.col) {
           this.setState(state => ({val: 'open'}));
           this.addZero();
         };
-        if ((x[0]+1) == this.props.row && (x[1]+1) == this.props.col) {
+        if ((x[0]+1) === this.props.row && (x[1]+1) === this.props.col) {
           this.setState(state => ({val: 'open'}));
           this.addZero();
         };
@@ -132,7 +136,7 @@ class Cell extends React.Component {
 
   bombSetup() {
     for (const x of bombList) {
-      if (x[0] == this.props.row && x[1] == this.props.col) {
+      if (x[0] === this.props.row && x[1] === this.props.col) {
         this.setState(state => ({bombCounter: 99}));
         this.setState(state => ({isBomb: true}));
         return;
@@ -140,28 +144,28 @@ class Cell extends React.Component {
     };
     
     for (const x of bombList) {
-      if (x[0] == this.props.row && (x[1] - 1) == this.props.col) {
+      if (x[0] === this.props.row && (x[1] - 1) === this.props.col) {
         this.bombAdd();
       };
-      if (x[0] == this.props.row && (x[1] + 1) == this.props.col) {
+      if (x[0] === this.props.row && (x[1] + 1) === this.props.col) {
         this.bombAdd();
       };
-      if ((x[0]-1) == this.props.row && x[1] == this.props.col) {
+      if ((x[0]-1) === this.props.row && x[1] === this.props.col) {
         this.bombAdd();
       };
-      if ((x[0]+1) == this.props.row && x[1] == this.props.col) {
+      if ((x[0]+1) === this.props.row && x[1] === this.props.col) {
         this.bombAdd();
       };
-      if ((x[0]-1) == this.props.row && (x[1]-1) == this.props.col) {
+      if ((x[0]-1) === this.props.row && (x[1]-1) === this.props.col) {
         this.bombAdd();
       };
-      if ((x[0]-1) == this.props.row && (x[1]+1) == this.props.col) {
+      if ((x[0]-1) === this.props.row && (x[1]+1) === this.props.col) {
         this.bombAdd();
       };
-      if ((x[0]+1) == this.props.row && (x[1]-1) == this.props.col) {
+      if ((x[0]+1) === this.props.row && (x[1]-1) === this.props.col) {
         this.bombAdd();
       };
-      if ((x[0]+1) == this.props.row && (x[1]+1) == this.props.col) {
+      if ((x[0]+1) === this.props.row && (x[1]+1) === this.props.col) {
         this.bombAdd();
       };
     };
@@ -175,7 +179,6 @@ class Cell extends React.Component {
         img = <CompTarget />
         clsName = 'cell-closed';
       } else {
-        img = <p>{this.props.row + this.props.col}</p>;
         clsName = 'cell-closed';
       }
     } else if (this.state.val === 'open') {
@@ -197,6 +200,7 @@ class Cell extends React.Component {
   }
 }
 
+ 
 
 class App extends React.Component {
   constructor(props) {
@@ -232,7 +236,7 @@ class App extends React.Component {
           </div>
           <div className="Control">
             <div className="flagCounter">
-              <p>10</p>
+              <flagTracker />
             </div>
             <div className="reset">
               <button>Reset</button>
