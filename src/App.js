@@ -28,6 +28,7 @@ for (let i = 1; i <= 10; i++) {
 } 
 
 let zeroList = [];
+let targetCounterVar = 10;
 
 class Cell extends React.Component {
   constructor(props) {
@@ -63,6 +64,9 @@ class Cell extends React.Component {
   }
 
   handleClick() {
+    if (this.state.isFlagged){
+      targetCounterVar++;
+    }
     this.setState(state => ({val: 'open'}));
     this.addZero();
   }
@@ -74,8 +78,10 @@ class Cell extends React.Component {
     if (this.state.val === 'closed') {
       if (this.state.isFlagged){
         this.setState(state => ({isFlagged: false}));
+        targetCounterVar++;
       }else{
         this.setState(state => ({isFlagged: true}));
+        targetCounterVar--;
       }
     }
   }
@@ -200,6 +206,26 @@ class Cell extends React.Component {
   }
 }
 
+class TargetCounter extends React.Component {
+  constructor(props) {
+    super(props);
+    this.state = {  
+      num: 10
+    }
+  }
+  updateCounter() {
+    this.setState(state => ({num: targetCounterVar}));
+  }
+  componentDidMount() {
+    this.interval = setInterval(() => this.updateCounter(), 100);
+  }
+
+  render() { 
+    return (  
+     <p>{this.state.num}</p>
+    );
+  }
+}
  
 
 class App extends React.Component {
@@ -236,7 +262,7 @@ class App extends React.Component {
           </div>
           <div className="Control">
             <div className="flagCounter">
-              <flagTracker />
+              <TargetCounter var={targetCounterVar} func={this.uselessUpdateFunction}/>
             </div>
             <div className="reset">
               <button>Reset</button>
