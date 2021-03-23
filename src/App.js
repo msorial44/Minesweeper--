@@ -1,4 +1,5 @@
 import React from 'react';
+import Modal from 'react-modal';
 import logo from './Images/bomb.svg';
 import fired from './Images/fired.svg';
 import target from './Images/target.svg';
