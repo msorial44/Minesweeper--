@@ -1,6 +1,6 @@
 import React from 'react';
-import Modal from 'react-modal';
 import logo from './Images/bomb.svg';
+import Modal from 'react-bootstrap/Modal'
 import fired from './Images/fired.svg';
 import target from './Images/target.svg';
 import './App.css';
