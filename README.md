@@ -1,6 +1,6 @@
 ## Minesweeper App
 
-!(App.png)
+![picture of app](App.png)
 
 
 clone the repo and run npm start from the the main directory.
