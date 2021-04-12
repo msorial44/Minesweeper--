@@ -248,7 +248,7 @@ class ResetButton extends React.Component { //reset button
 };
  
 
-class EndModal extends React.Component {
+class EndModal extends React.Component { //Modal for the end screen
   constructor(props) {
     super(props);
     this.state = {  
@@ -281,11 +281,10 @@ class EndModal extends React.Component {
       return (  
         <>
         <Modal show={this.state.isOpen} onHide={this.closeModal} onExit={this.onExit} size="lg"
-        aria-labelledby="contained-modal-title-vcenter" centered>
-          <Modal.Header closeButton>
-            <Modal.Title>Modal heading</Modal.Title>
+        aria-labelledby="contained-modal-title-vcenter" centered className="end-modal">
+          <Modal.Header>
+            <Modal.Title>You lost!</Modal.Title>
           </Modal.Header>
-          <Modal.Body>Woohoo, you're reading this text in a modal!</Modal.Body>
           <Modal.Footer>
             <ResetButton/>
           </Modal.Footer>
@@ -333,7 +332,9 @@ class App extends React.Component {
         <div className="App-container">
           <div className="App-Header">
             <p className="App-title">Minesweeper</p>
-            <img src={logo} className="App-logo" alt="logo"></img>
+            <div className="logo-container">
+              <img src={logo} className="App-logo" alt="logo"></img>
+            </div>
           </div>
           <div className="Control">
             <div className="flagCounter">
