@@ -6,7 +6,7 @@ import target from './Images/target.svg';
 import './App.scss';
 
 function CompFired() { //component to house image
-  return <img className='cell-img' src={fired} alt="" />
+  return <img className='cell-bomb-img' src={fired} alt="" />
 }
 
 function CompTarget() { //component to house image
@@ -200,7 +200,7 @@ class Cell extends React.Component { //main cell code
         img = <CompFired />
         clsName = 'cell-bomb';
       } else {
-        img = <p>{this.state.bombCounter}</p>;
+        img = <p className="bomb-counter">{this.state.bombCounter}</p>;
         clsName = 'cell-open';
       }
     }
