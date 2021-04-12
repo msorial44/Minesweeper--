@@ -3,7 +3,7 @@ import logo from './Images/bomb.svg';
 import Modal from 'react-bootstrap/Modal'
 import fired from './Images/fired.svg';
 import target from './Images/target.svg';
-import './App.css';
+import './App.scss';
 
 function CompFired() { //component to house image
   return <img className='cell-img' src={fired} alt="" />

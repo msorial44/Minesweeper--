@@ -1,3 +1,5 @@
+@import "custom";
+
 .App {
   background-color: #282c34;
   height: 100vh;
@@ -62,11 +64,6 @@
   margin: 10px;
   padding: 1px 15px;
   display: inline-block;
-}
-
-.p {
-  margin-top: 0;
-  margin-bottom: 0;
 }
 
 .timer {
