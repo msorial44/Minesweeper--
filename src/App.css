@@ -64,6 +64,11 @@
   display: inline-block;
 }
 
+.p {
+  margin-top: 0;
+  margin-bottom: 0;
+}
+
 .timer {
   margin: 10px;
   padding: 1px 7px;

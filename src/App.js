@@ -1,5 +1,4 @@
 import React from 'react';
-import 'bootstrap/dist/css/bootstrap.min.css';
 import logo from './Images/bomb.svg';
 import Modal from 'react-bootstrap/Modal'
 import fired from './Images/fired.svg';
