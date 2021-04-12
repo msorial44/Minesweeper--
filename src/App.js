@@ -1,4 +1,5 @@
 import React from 'react';
+import 'bootstrap/dist/css/bootstrap.min.css';
 import logo from './Images/bomb.svg';
 import Modal from 'react-bootstrap/Modal'
 import fired from './Images/fired.svg';
@@ -17,6 +18,7 @@ function randomInt(min, max) { // random integer for bomb, min and max included
   return Math.floor(Math.random() * (max - min + 1) + min);
 }
 
+
 let bombList = []; //list of bombs
 for (let i = 1; i <= 10; i++) { //get random tiles to become bombs
   var randCol = randomInt(1, 8);
@@ -30,6 +32,9 @@ for (let i = 1; i <= 10; i++) { //get random tiles to become bombs
 
 let zeroList = []; //list of tiles that have no bombs near it
 let targetCounterVar = 10; //var to count how many flags left
+let isEnd = false; //if true will trigger EndModal
+let endCheck = true; //stops EndModal from infinitley refreshing itself
+let updateInt; //updates in modal to cause rerender
 
 class Cell extends React.Component { //main cell code
   constructor(props) {
@@ -67,6 +72,9 @@ class Cell extends React.Component { //main cell code
   handleClick() { //function to handle clicks
     if (this.state.isFlagged){ //if player opens a tile with a target removes target and adds to total targets
       targetCounterVar++;
+    }
+    if (this.state.isBomb) {
+      isEnd = true;
     }
     this.setState(state => ({val: 'open'})); //opens tile
     this.addZero();//if tile is a 0 add to zerolist
@@ -226,7 +234,7 @@ class TargetCounter extends React.Component { //counter component for counting f
      <p>{this.state.num}</p>
     );
   }
-}
+};
  
 class ResetButton extends React.Component { //reset button
   handleClick() {
@@ -235,8 +243,61 @@ class ResetButton extends React.Component { //reset button
 
   render() { 
     return (  
-      <button onClick={this.handleClick}>Reset</button>
+      <button type="button" class="btn btn-dark" onClick={this.handleClick}>Reset</button>
     );
+  }
+};
+ 
+
+class EndModal extends React.Component {
+  constructor(props) {
+    super(props);
+    this.state = {  
+      isOpen: true,
+      updateInt: 1
+    }
+  }
+
+
+  componentDidMount() {
+    endCheck = true
+    this.interval = setInterval(() => this.checkEnd(), 100);
+  }
+
+  checkEnd() {
+    if (isEnd && endCheck) {
+      this.setState({updateInt: 2})
+      endCheck = false;
+    }
+  }
+
+  closeModal = () => this.setState({ isOpen: false });
+
+  onExit() {
+    window.location.reload();
+  }
+
+  render() { 
+    if (isEnd) {
+      return (  
+        <>
+        <Modal show={this.state.isOpen} onHide={this.closeModal} onExit={this.onExit} size="lg"
+        aria-labelledby="contained-modal-title-vcenter" centered>
+          <Modal.Header closeButton>
+            <Modal.Title>Modal heading</Modal.Title>
+          </Modal.Header>
+          <Modal.Body>Woohoo, you're reading this text in a modal!</Modal.Body>
+          <Modal.Footer>
+            <ResetButton/>
+          </Modal.Footer>
+        </Modal>
+      </>
+      );
+    } else {
+      return (
+        <div></div>
+      );
+    };
   }
 }
  
@@ -267,6 +328,8 @@ class App extends React.Component {
 
   render() { //page heirarchy
     return (
+      <>
+      <EndModal/>
       <div className="App">
         <div className="App-container">
           <div className="App-Header">
@@ -289,6 +352,7 @@ class App extends React.Component {
           </div>
         </div>
       </div>
+    </>
     );
   };
 }
