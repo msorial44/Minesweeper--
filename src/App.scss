@@ -33,6 +33,7 @@
 }
 .App-title {
   font-size: 40px;
+  font-family: 'Roboto Mono', monospace;
 }
 
 .logo-container {
@@ -49,6 +50,7 @@
 .modal-title {
   color: white;
   font-size: 40px;
+  font-family: 'Roboto Mono', monospace;
 }
 
 .modal-header {
@@ -69,6 +71,7 @@
   padding-right: 5px;
   align-self: center;
   align-items: center;
+  font-family: 'Roboto Mono', monospace;
 }
 
 @media (prefers-reduced-motion: no-preference) {
@@ -93,13 +96,25 @@
 .flagCounter {
   margin: 10px;
   padding: 1px 15px;
+  margin-left: 23px;
   display: inline-block;
+  font-family: 'Roboto Mono', monospace;
 }
 
 .timer {
   margin: 10px;
+  margin-bottom: 25px;
+  
   padding: 1px 7px;
   display: inline-block;
+  justify-content: left;
+  justify-self: left;
+  font-family: 'Roboto Mono', monospace;
+}
+
+.timer span{
+  display: inline-block;
+  width: 70px;
 }
 
 .reset {
@@ -107,6 +122,7 @@
   margin-left: 10px;
   margin-right: 10px;
   display: inline-block;
+  font-family: 'Roboto Mono', monospace;
 }
 
 .Field {
@@ -161,6 +177,7 @@
   text-align: center;
   vertical-align: middle;
   display: flex;
+  font-family: 'Roboto Mono', monospace;
   justify-content: center;
   align-items: center;
   box-shadow: 1px 1px 5px red, -1px -1px 5px red, 1px -1px 5px red, -1px 1px 5px red

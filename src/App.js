@@ -2,6 +2,7 @@ import React from 'react';
 import logo from './Images/bomb.svg';
 import Modal from 'react-bootstrap/Modal'
 import fired from './Images/fired.svg';
+import Timer from 'react-compound-timer'
 import target from './Images/target.svg';
 import './App.scss';
 
@@ -344,7 +345,24 @@ class App extends React.Component {
               <ResetButton />
             </div>
             <div className="timer">
-              <p>0:00</p>
+              <Timer
+                
+                initialTime={300000}
+                direction="backward"
+                checkpoints={[
+                  {
+                    time: 0,
+                    callback: () => isEnd = true,
+                  }
+                ]}
+              >
+                {() => (
+                  <React.Fragment>
+                    <Timer.Minutes />:
+                    <Timer.Seconds formatValue={value => `${value < 10 ? `0${value}` : value}`}/>
+                  </React.Fragment>
+                )}
+              </Timer>
             </div>
           </div>
           <div className="Field">
