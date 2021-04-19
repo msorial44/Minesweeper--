@@ -23,18 +23,19 @@ let bombList = []; //list of bombs
 for (let i = 1; i <= 10; i++) { //get random tiles to become bombs
   var randCol = randomInt(1, 8);
   var randRow = randomInt(1, 9);
-  if (bombList.includes([randRow, randCol])) {
-
-  } else {
-    bombList.push([randRow, randCol]);
+  for (var x of bombList) {
+    while (x[0] === randRow && x[1] === randCol) {
+      randCol = randomInt(1, 8);
+      randRow = randomInt(1, 9);
+    }
   }
+  bombList.push([randRow, randCol]);
 } 
 
 let zeroList = []; //list of tiles that have no bombs near it
 let targetCounterVar = 10; //var to count how many flags left
 let isEnd = false; //if true will trigger EndModal
 let endCheck = true; //stops EndModal from infinitley refreshing itself
-let updateInt; //updates in modal to cause rerender
 
 class Cell extends React.Component { //main cell code
   constructor(props) {
@@ -194,6 +195,7 @@ class Cell extends React.Component { //main cell code
         img = <CompTarget />
         clsName = 'cell-closed';
       } else {
+
         clsName = 'cell-closed';
       }
     } else if (this.state.val === 'open') {
@@ -253,8 +255,7 @@ class EndModal extends React.Component { //Modal for the end screen
   constructor(props) {
     super(props);
     this.state = {  
-      isOpen: true,
-      updateInt: 1
+      isOpen: true
     }
   }
 
@@ -339,7 +340,7 @@ class App extends React.Component {
           </div>
           <div className="Control">
             <div className="flagCounter">
-              <TargetCounter var={targetCounterVar} func={this.uselessUpdateFunction}/>
+              <TargetCounter var={targetCounterVar} func={this.uselessUpdateFunction} />
             </div>
             <div className="reset">
               <ResetButton />
