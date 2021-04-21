@@ -35,7 +35,10 @@ for (let i = 1; i <= 10; i++) { //get random tiles to become bombs
 let zeroList = []; //list of tiles that have no bombs near it
 let targetCounterVar = 10; //var to count how many flags left
 let isEnd = false; //if true will trigger EndModal
+let isWin = false; //if true will trigger WinModal
 let endCheck = true; //stops EndModal from infinitley refreshing itself
+let winCounter = 0; //counts how many bombs have flags on them
+let winCheck = true;
 
 class Cell extends React.Component { //main cell code
   constructor(props) {
@@ -70,6 +73,8 @@ class Cell extends React.Component { //main cell code
     clearInterval(this.interval);
   }
 
+  
+
   handleClick() { //function to handle clicks
     if (this.state.isFlagged){ //if player opens a tile with a target removes target and adds to total targets
       targetCounterVar++;
@@ -89,6 +94,13 @@ class Cell extends React.Component { //main cell code
       if (this.state.isFlagged){ //unflag a tile
         this.setState(state => ({isFlagged: false}));
         targetCounterVar++;
+        if (this.state.isBomb) {
+          winCounter--;
+        }
+      }else if (this.state.isBomb) { //if its a bomb and flagged add to winCounter
+        this.setState(state => ({isFlagged: true}));
+        targetCounterVar--;
+        winCounter++;
       }else{ //flag a tile
         this.setState(state => ({isFlagged: true}));
         targetCounterVar--;
@@ -301,6 +313,56 @@ class EndModal extends React.Component { //Modal for the end screen
   }
 }
  
+class WinModal extends React.Component { //Modal for the end screen
+  constructor(props) {
+    super(props);
+    this.state = {  
+      isOpen: true
+    }
+  }
+
+
+  componentDidMount() {
+    this.interval = setInterval(() => this.checkWin(), 100);
+  }
+
+  checkWin() {
+    if (winCounter === 10 && winCheck) {
+      isWin = true;
+      winCheck = false;
+      this.setState({updateInt: 2})
+    }
+  }
+
+  closeModal = () => this.setState({ isOpen: false });
+
+  onExit() {
+    window.location.reload();
+  }
+
+  render() { 
+    if (isWin) {
+      return (  
+        <>
+        <Modal show={this.state.isOpen} onHide={this.closeModal} onExit={this.onExit} size="lg"
+        aria-labelledby="contained-modal-title-vcenter" centered className="end-modal">
+          <Modal.Header>
+            <Modal.Title>You Win!</Modal.Title>
+          </Modal.Header>
+          <Modal.Footer>
+            <ResetButton/>
+          </Modal.Footer>
+        </Modal>
+      </>
+      );
+    } else {
+      return (
+        <div></div>
+      );
+    };
+  }
+}
+
 
 class App extends React.Component {
   constructor(props) {
@@ -330,6 +392,7 @@ class App extends React.Component {
     return (
       <>
       <EndModal/>
+      <WinModal/>
       <div className="App">
         <div className="App-container">
           <div className="App-Header">
