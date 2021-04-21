@@ -326,7 +326,7 @@ class WinModal extends React.Component { //Modal for the end screen
     this.interval = setInterval(() => this.checkWin(), 100);
   }
 
-  checkWin() {
+  checkWin() { //checks if game has won
     if (winCounter === 10 && winCheck) {
       isWin = true;
       winCheck = false;
