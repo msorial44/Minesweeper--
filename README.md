@@ -4,7 +4,7 @@
 
 ### Link to app
 
-[Minewseeper--](https://minesweeper-minus-minus.herokuapp.com/)
+[Minewseeper--](https://minesweeper-msorial44.vercel.app/)
 
 P.S: May or may not be running at any time
 
