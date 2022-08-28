@@ -1,8 +1,8 @@
 import React from 'react';
 import logo from './Images/bomb.svg';
-import Modal from 'react-bootstrap/Modal'
+import Modal from 'react-bootstrap/esm/Modal.js'
 import fired from './Images/fired.svg';
-import Timer from 'react-compound-timer'
+import Timer from 'react-compound-timer/build/index.js'
 import target from './Images/target.svg';
 import './App.scss';
 
